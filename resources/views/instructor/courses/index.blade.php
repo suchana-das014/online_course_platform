@@ -1,6 +1,10 @@
-<h1>Student Dashboard</h1>
+<h1>My Courses</h1>
 
-<h3>My Learning Progress</h3>
+<a href="{{ route('instructor.courses.create') }}">
+    ➕ Create New Course
+</a>
+
+<hr>
 
 @if($courses->count())
     <ul>
@@ -11,7 +15,5 @@
         @endforeach
     </ul>
 @else
-    <p>You have not enrolled in any course yet.</p>
+    <p>No courses created yet.</p>
 @endif
-
-<a href="/courses">Browse Courses</a>

@@ -25,6 +25,17 @@ class User extends Authenticatable
 ];
 
 
+    public function enrollments()
+{
+    return $this->hasMany(Enrollment::class);
+}
+
+public function enrolledCourses()
+{
+    return $this->belongsToMany(Course::class, 'enrollments');
+}
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

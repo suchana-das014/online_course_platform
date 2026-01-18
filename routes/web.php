@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentDashboardController;
 use App\Http\Controllers\InstructorDashboardController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Instructor\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +52,21 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::middleware(['auth','role:instructor'])->prefix('instructor')->name('instructor.')->group(function () {
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+    Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
+});
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+
+    Route::get('/courses', [\App\Http\Controllers\Student\CourseController::class, 'index'])
+        ->name('student.courses.index');
+
+    Route::post('/courses/{course}/enroll', [\App\Http\Controllers\Student\CourseController::class, 'enroll'])
+        ->name('student.courses.enroll');
+});
+
 
 require __DIR__.'/auth.php';
