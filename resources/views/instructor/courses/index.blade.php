@@ -9,8 +9,13 @@
 @if($courses->count())
     <ul>
         @foreach($courses as $course)
-            <li>
+            <li style="margin-bottom:15px">
                 <strong>{{ $course->title }}</strong>
+                <br>
+
+                <a href="{{ route('instructor.lessons.create', $course) }}">
+                    ➕ Add Lessons
+                </a>
             </li>
         @endforeach
     </ul>

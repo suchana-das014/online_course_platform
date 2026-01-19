@@ -26,5 +26,11 @@ public function students()
     return $this->belongsToMany(User::class, 'enrollments');
 }
 
+public function lessons()
+{
+    return $this->hasMany(Lesson::class);
+}
+
+
 
 }
