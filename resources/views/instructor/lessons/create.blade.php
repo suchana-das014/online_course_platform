@@ -1,17 +1,13 @@
-<h1>Add Lesson to {{ $course->title }}</h1>
-
-@if(session('success'))
-    <p style="color:green">{{ session('success') }}</p>
-@endif
+<h1>Add Lesson for: {{ $course->title }}</h1>
 
 <form method="POST" action="{{ route('instructor.lessons.store', $course) }}">
     @csrf
 
-    <label>Lesson Title</label><br>
-    <input type="text" name="title"><br><br>
+    <input type="text" name="title" placeholder="Lesson Title" required><br><br>
 
-    <label>Video URL</label><br>
-    <input type="text" name="video_url"><br><br>
+    <textarea name="content" placeholder="Lesson Content"></textarea><br><br>
 
-    <button type="submit">Add Lesson</button>
+    <input type="url" name="video_url" placeholder="Video URL"><br><br>
+
+    <button type="submit">Save Lesson</button>
 </form>

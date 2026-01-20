@@ -16,6 +16,18 @@
                 <a href="{{ route('instructor.lessons.create', $course) }}">
                     ➕ Add Lessons
                 </a>
+
+                 <!-- DELETE BUTTON -->
+                <form action="{{ route('instructor.courses.destroy', $course) }}"
+                      method="POST"
+                      style="display:inline"
+                      onsubmit="return confirm('Are you sure you want to delete this course?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" style="color:red">
+                        🗑 Delete
+                    </button>
+                </form>
             </li>
         @endforeach
     </ul>

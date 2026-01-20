@@ -37,5 +37,20 @@ class CourseController extends Controller
 
         return redirect()->route('instructor.courses.index');
     }
+
+            public function destroy(Course $course)
+        {
+            if ($course->user_id !== auth()->id()) {
+                abort(403);
+            }
+
+            $course->delete();
+
+            return redirect()
+                ->route('instructor.courses.index')
+                ->with('success', 'Course deleted successfully');
+        }
+
+
 }
 

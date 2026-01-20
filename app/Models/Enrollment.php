@@ -2,20 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Enrollment extends Model
 {
-    public function up(): void
-{
-    Schema::create('enrollments', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->foreignId('course_id')->constrained()->onDelete('cascade');
-        $table->timestamps();
+    use HasFactory;
 
-        $table->unique(['user_id', 'course_id']);
-    });
-}
-
+    protected $fillable = [
+        'user_id',
+        'course_id',
+    ];
 }

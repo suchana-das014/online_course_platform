@@ -31,6 +31,4 @@ public function lessons()
     return $this->hasMany(Lesson::class);
 }
 
-
-
 }
