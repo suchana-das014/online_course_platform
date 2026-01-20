@@ -30,10 +30,13 @@ class User extends Authenticatable
     return $this->hasMany(Enrollment::class);
 }
 
+
+
 public function enrolledCourses()
 {
-    return $this->belongsToMany(Course::class, 'enrollments');
+    return $this->belongsToMany(Course::class, 'enrollments', 'user_id', 'course_id');
 }
+
 
 
     /**
@@ -58,4 +61,13 @@ public function enrolledCourses()
             'password' => 'hashed',
         ];
     }
+
+    public function completedLessons()
+{
+    return $this->belongsToMany(
+        \App\Models\Lesson::class,
+        'lesson_user'
+    )->withPivot('completed_at');
 }
+}
+

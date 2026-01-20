@@ -86,5 +86,18 @@ Route::middleware(['auth', 'role:instructor'])->group(function () {
     )->name('instructor.lessons.store');
 });
 
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/my-courses/{course}',
+        [\App\Http\Controllers\StudentDashboardController::class, 'viewCourse']
+    )->name('student.course.view');
+});
+
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::post('/lessons/{lesson}/complete',
+        [\App\Http\Controllers\Student\LessonController::class, 'complete']
+    )->name('student.lessons.complete');
+});
+
+
 
 require __DIR__.'/auth.php';

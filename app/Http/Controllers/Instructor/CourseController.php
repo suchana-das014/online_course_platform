@@ -38,12 +38,17 @@ class CourseController extends Controller
         return redirect()->route('instructor.courses.index');
     }
 
-            public function destroy(Course $course)
+         public function destroy(Course $course)
         {
+            // instructor can delete only own course
             if ($course->user_id !== auth()->id()) {
                 abort(403);
             }
 
+            // deletes related lessons first
+            $course->lessons()->delete();
+
+            // delete course
             $course->delete();
 
             return redirect()

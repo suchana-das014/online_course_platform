@@ -14,11 +14,43 @@ class StudentDashboardController extends Controller
     }
 
 
-    public function viewCourse(Course $course)
-    {
-        $lessons = $course->lessons;
-        return view('student.course', compact('course', 'lessons'));
+    
+
+public function viewCourse(Course $course)
+{
+    // ensure student is enrolled
+    if (! auth()->user()->enrolledCourses()->where('course_id', $course->id)->exists()) {
+        abort(403);
     }
+
+    $course->load('lessons'); // eager load lessons
+
+    $user = auth()->user();
+
+    $totalLessons = $course->lessons->count();
+
+    $completedLessons = $user->completedLessons()
+        ->whereIn('lesson_id', $course->lessons->pluck('id'))
+        ->count();
+
+    $progress = $totalLessons > 0
+        ? round(($completedLessons / $totalLessons) * 100)
+        : 0;
+
+    $completedLessonIds = $user->completedLessons
+        ->pluck('lesson_id') // assuming pivot table or completed lessons relation
+        ->toArray();
+
+    return view('student.courses.show', compact(
+        'course',
+        'progress',
+        'totalLessons',
+        'completedLessons',
+        'completedLessonIds'
+    ));
+}
+
+
 
 
 }
